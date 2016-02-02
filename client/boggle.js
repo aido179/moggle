@@ -1,19 +1,22 @@
 
 Session.setDefault('words', []);
 Session.setDefault('time', "3:00");
+Session.setDefault('dice',[]);
 var startTime = moment();
 var word = [];
 var letterEls = [];
 var draggingLetter = false;
 updateTime();
 
+Template.boggle.onRendered(function(){
+  var game = getGame();
+  Session.set('dice',game);
+
+});
+
 Template.boggle.helpers({
   dice: function () {
-    return [
-      {letter:"d"},{letter:"e"},{letter:"a"},{letter:"d"},
-      {letter:"d"},{letter:"o"},{letter:"v"},{letter:"e"},
-      {letter:"d"},{letter:"o"},{letter:"n"},{letter:"t"},
-      {letter:"e"},{letter:"a"},{letter:"t"},{letter:"Qu"}];
+    return Session.get('dice');
   },
   words: function(){
     return Session.get('words');
@@ -45,10 +48,33 @@ Template.boggle.events({
 function addLetter(el){
   //don't allow the same letter twice
   if(letterEls.indexOf(el)==-1){
-    var letter = $(el).data('letter');
-    word.push(letter);
-    letterEls.push(el);
-    $(el).parent().addClass("dark-dice");
+    //allow the first letter...
+    if(letterEls.length == 0){
+      var letter = $(el).data('letter');
+      word.push(letter);
+      letterEls.push(el);
+      $(el).parent().addClass("dark-dice");
+    }else{
+      //only allow adjacent letters, using letter order.
+      var prev = $(letterEls[letterEls.length-1]).data('order');
+      var curr = $(el).data('order');
+      var game = Session.get('dice');
+      //get all dice adjacent to the new (current) dice
+      var adjToCurr = game[curr-1]["adj"];
+      //loop through and check if the prev dice is there.
+      for(adjDice in adjToCurr){
+        if (adjToCurr.hasOwnProperty(adjDice)){
+          if(adjToCurr[adjDice]===prev){
+            //found prev dice, so we can add letter
+            var letter = $(el).data('letter');
+            word.push(letter);
+            letterEls.push(el);
+            $(el).parent().addClass("dark-dice");
+            break;
+          }
+        }
+      }
+    }
   }
 }
 
