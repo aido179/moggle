@@ -1,25 +1,31 @@
 <template name="boggle">
-  <h2>Boggle [{{timer}}]</h2>
-  <div class="board container">
-    <div class="board-content">
-      {{#each d in dice}}
-        <div class="box">
-          <div class="dice">
-            <div class="diceletter" data-letter="{{d.letter}}" data-order="{{d.order}}">
-              {{d.letter}}
-            </div>
+  <div class="container">
+    <div class="row"><h2>Boggle [{{timer}}]</h2></div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <div class="board">
+          <div class="board-content">
+            {{#each d in dice}}
+              <div class="box">
+                <div class="dice">
+                  <div class="diceletter" data-letter="{{d.letter}}" data-order="{{d.order}}">
+                    {{d.letter}}
+                  </div>
+                </div>
+              </div>
+            {{/each}}
           </div>
         </div>
-      {{/each}}
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="wordList well">
+          <ul>
+            {{#each words}}
+            <li>{{this}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
-
-  <div class="wordList">
-    <ul>
-      {{#each words}}
-      <li>{{this}}</li>
-      {{/each}}
-    </ul>
-  </div>
-
 </template>
