@@ -28,19 +28,32 @@ Template.boggle.helpers({
 
 
 Template.boggle.events({
-  'mousedown .diceletter': function(event){
+  'mousedown .diceletter, touchstart .diceletter': function(event){
+    console.log("down/start");
     draggingLetter = true;
     addLetter(event.currentTarget);
+    event.preventDefault();
+    event.stopPropagation();
   },
   'mouseenter .diceletter': function(event){
     if(draggingLetter){
       addLetter(event.currentTarget);
     }
   },
-  'mouseup': function(event){
+  'touchmove': function(event){
+    if(draggingLetter){
+      var el = document.elementFromPoint(event.originalEvent.touches[0].clientX, event.originalEvent.touches[0].clientY);
+      if($(el).hasClass("diceletter")){
+        addLetter(el);
+      }
+    }
+  },
+  'mouseup, touchend': function(event){
+    console.log("cancel");
     finishWord();
   },
-  'mouseleave .board': function(event){
+  'mouseleave .board, touchleave .board': function(event){
+    console.log("leave board");
     finishWord();
   },
 });
