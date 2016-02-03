@@ -1,5 +1,7 @@
 Games = new Mongo.Collection("games");
 Challenges = new Mongo.Collection("challenges");
+Dictionary = new Mongo.Collection("dictionary");
+
 
 var Schemas = {};
 
@@ -48,3 +50,11 @@ Schemas.Challenges = new SimpleSchema({
     }
 });
 Challenges.attachSchema(Schemas.Challenges);
+
+Schemas.Dictionary = new SimpleSchema({
+    word: {
+        type: String,
+        label: "Word"
+    }
+});
+Dictionary.attachSchema(Schemas.Dictionary);
