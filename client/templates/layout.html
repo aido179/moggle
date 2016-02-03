@@ -1,0 +1,13 @@
+<template name="applicationLayout">
+  <head>
+    <title>Boggle</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  </head>
+
+  <body>
+    <div class="navbar">
+      {{> loginButtons}}
+    </div>
+    {{> yield}}
+  </body>
+</template>
