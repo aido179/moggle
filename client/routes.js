@@ -36,3 +36,6 @@ Router.route('/boggleComplete', function () {
 Router.route('/boggleError', function () {
   this.render('boggleError');
 });
+Router.route('/user', function () {
+  this.render('user');
+});

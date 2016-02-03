@@ -13,5 +13,11 @@ Meteor.methods({
   },
   checkGame: function(gameHash){
     return !!Games.find({player:Meteor.userId(), hash:gameHash}).count();
+  },
+  updateUsername: function(username){
+    if (! Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Accounts.setUsername(Meteor.userId(), username);
   }
 });

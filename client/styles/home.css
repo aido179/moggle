@@ -22,3 +22,8 @@ h1{
   font-family: 'Pacifico', cursive;
   font-size:4em;
 }
+
+.username-form, .challenge-form{
+  text-align:center;
+  margin: 10px auto;
+}

@@ -1,0 +1,45 @@
+<template name="user">
+  <div class="container">
+    <div class="row game-header">
+      <h1>Moggle</h1>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="wordList username-form">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="username">Your Username</label>
+              <input type="text" class="form-control username" id="username" placeholder="{{username}}">
+            </div>
+            <a href="#" class="btn btn-default usernameUpdate">Update</a>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="wordList well">
+          <h2>Your games:</h2>
+          <ul>
+          {{#each games}}
+            <li><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: {{this.score}}</li>
+          {{/each}}
+        </ul>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="wordList challenge-form">
+          <form class="form-inline">
+            <div class="form-group">
+              <label for="username">Challenge:</label>
+              <input type="text" class="form-control chal-user" id="chal-user" placeholder="Username">
+            </div>
+            <a href="#" class="btn btn-default challengeSubmit">Challenge</a>
+          </form>
+        </div>
+        <div class="wordList well">
+           <h2>Your Challenges:</h2>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
