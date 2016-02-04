@@ -10,6 +10,12 @@
   margin-left:auto;
   margin-right:auto;
   padding: 15px;
+  border-width: 1em;
+  border-style: solid;
+  border-color: #284E70;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  border-radius: 15px;
   background-color: #337AB7;
   -webkit-box-shadow: inset 0px 0px 30px 14px rgba(50, 50, 50, 0.32);
   -moz-box-shadow:    inset 0px 0px 30px 14px rgba(50, 50, 50, 0.32);

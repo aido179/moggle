@@ -1,14 +1,21 @@
 .navbar{
-  width:100%;
-  text-align:right;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-  padding-top: 13px;
-  padding-right: 10px;
-  border-bottom: #CAC1B4 1px solid;
+  padding: 1em;
+}
+.logo{
+  background-color: #555;
+  font-family: 'Pacifico', cursive;
+  margin-right: 1em;
+  padding: 1em;
+  color: #eee;
   -webkit-box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.35);
-  -moz-box-shadow:    0px 3px 10px 0px rgba(50, 50, 50, 0.35);
-  box-shadow:         0px 3px 10px 0px rgba(50, 50, 50, 0.35);
+  -moz-box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.35);
+  box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.35);
+}
+.headerLink{
+  margin-left:1em;
+}
+.login-link-text{
+  text-decoration: none !important;
 }
 
 .home-container{
@@ -21,6 +28,7 @@
 h1{
   font-family: 'Pacifico', cursive;
   font-size:4em;
+  margin-bottom: 1em;
 }
 
 .username-form, .challenge-form{

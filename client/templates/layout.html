@@ -6,7 +6,11 @@
 
   <body>
     <div class="navbar">
+      <span class="logo">M</span>
       {{> loginButtons}}
+      {{#if currentUser}}
+        <a href="/user" class="headerLink"> My account </a>
+      {{/if}}
     </div>
     {{> yield}}
   </body>
