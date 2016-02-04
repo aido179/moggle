@@ -18,6 +18,8 @@ Don't worry about accidentally selecting non-words or wrong letters. These will 
 
 If you create an account, moggle will store your previous games.
 
+You can challenge other players to games. Click on 'my account', and type a username into the challenge box.
+
 ##Technology
 Moggle is built using [meteor](http://www.meteor.com), with blaze. [Bootstrap](http://getbootstrap.com) is used for UI elements and layout. Simple.
 
@@ -26,6 +28,6 @@ Here's what I want to get working (eventually). Pull requests are most welcome.
 
 - [x] Verify words against dictionary
 - [x] User accounts / store games
-- [ ] Challenge other players (non-realtime) 
+- [x] Challenge other players (non-realtime) 
 - [ ] Challenge other players (realtime, server time synced timer)
 - [ ] ... suggestions welcome. Please make a new issue. 
