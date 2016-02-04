@@ -39,14 +39,15 @@ Schemas.Challenges = new SimpleSchema({
         optional: true
     },
     "players.$": {
-        type: String
+        type: Object
     },
-    completedBy: {
-      type: Array,
-      optional: true
+    "players.$.username": {
+        type: String,
+        label: "Player username"
     },
-    "completedBy.$":{
-      type: String
+    "players.$.played": {
+        type: Boolean,
+        label: "Has the player played this Challenge?"
     }
 });
 Challenges.attachSchema(Schemas.Challenges);

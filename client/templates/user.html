@@ -20,7 +20,7 @@
           <h2>Your games:</h2>
           <ul>
           {{#each games}}
-            <li><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: (coming soon)</li>
+            <li><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: ...</li>
           {{/each}}
         </ul>
         </div>
@@ -30,14 +30,19 @@
           <form class="form-inline">
             <div class="form-group">
               <label for="username">Challenge:</label>
-              <input type="text" class="form-control chal-user" id="chal-user" placeholder="Username">
+              <input type="text" class="form-control chal-user" id="chal-user" placeholder="Username, Username, ...">
             </div>
             <a href="#" class="btn btn-default challengeSubmit">Challenge</a>
           </form>
         </div>
         <div class="wordList well">
            <h2>Your Challenges:</h2>
-
+           {{#each chal in challenges}}
+            {{#each chal.players}}
+              {{this.username}} - {{this.played}}
+            {{/each}}
+            [{{chal.hash}}]<br>
+           {{/each}}
         </div>
       </div>
     </div>

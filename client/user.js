@@ -1,4 +1,5 @@
 Meteor.subscribe("Games");
+Meteor.subscribe("Challenges");
 Meteor.subscribe("userData");
 
 Template.user.helpers({
@@ -22,6 +23,10 @@ Template.user.helpers({
       username =  Meteor.user().username;
     }
     return username;
+  },
+  challenges: function(){
+    console.log(Challenges.find({}));
+    return Challenges.find({});
   }
 });
 
@@ -30,6 +35,6 @@ Template.user.events({
     Meteor.call("updateUsername",$('.username').val());
   },
   'click .challengeSubmit': function(){
-    Meteor.call("challengeUser",$('.chal-user').val());
+    Meteor.call("createChallenge",$('.chal-user').val());
   }
 });
