@@ -11,9 +11,9 @@ Router.route('/boggle/:gamehash', function () {
   //generate the game
   var hash = this.params.gamehash;
   if(hash.length!=16){
-    Session.setDefault('dice',getGame());
+    Session.set('dice',getGame());
   }else{
-    Session.setDefault('dice',getGameFromHash(hash));
+    Session.set('dice',getGameFromHash(hash));
   }
   //make sure the user has not already played this game
   Meteor.call("checkGame",getGameHash(Session.get('dice')),function(error, result){
@@ -26,7 +26,7 @@ Router.route('/boggle/:gamehash', function () {
 });
 
 Router.route('/boggle', function () {
-  Session.setDefault('dice',getGame());
+  Session.set('dice',getGame());
   this.render('boggle');
 });
 
