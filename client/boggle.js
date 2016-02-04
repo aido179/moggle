@@ -9,6 +9,7 @@ var draggingLetter = false;
 
 
 Template.boggle.onRendered(function(){
+  Session.set('words', []);
   startTime = moment();
   updateTime();
 });
@@ -121,4 +122,13 @@ function pad(n, width, z) {
   z = z || '0';
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+//End game early for testing purposes
+endGame = function(){
+  var data = {
+    gameHash: getGameHash(Session.get('dice')),
+    words: Session.get('words')
+  };
+  Meteor.call("addGame", data);
+  Router.go('/boggleComplete');
 }

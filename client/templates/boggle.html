@@ -21,11 +21,13 @@
       </div>
       <div class="col-md-6 col-sm-12">
         <div class="wordList well">
-           <h2><span class="glyphicon glyphicon-time"></span> {{timer}}</h2>
-           <h3>Words:</h3>
+          <h2><span class="glyphicon glyphicon-time"></span> {{timer}}</h2>
+          <h3>Words:</h3>
           <ul>
             {{#each words}}
             <li>{{this}}</li>
+            {{else}}
+            <li>(Click and drag the letters!)</li>
             {{/each}}
           </ul>
         </div>

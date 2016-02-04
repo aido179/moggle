@@ -18,7 +18,10 @@
             {{/each}}
           </div>
           <div class="board-over">
-            <div class="timeup-message"><h1>Time Up!</h1></div>
+            <div class="timeup-message">
+              <h1>Times Up!</h1>
+              <a class="btn btn-primary btn-lg" href="/boggle">Play Again</a>
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +37,7 @@
           <h3>Discarded Words:</h3>
           <ul>
             {{#each unverifiedWords}}
-            <li>{{this.word}} ({{this.score}})</li>
+            <li>{{this}}</li>
             {{/each}}
           </ul>
         </div>

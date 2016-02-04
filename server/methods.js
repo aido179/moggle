@@ -23,7 +23,7 @@ Meteor.methods({
   checkWords: function(wordsArr){
     var out = [];
     for(i=0;i<wordsArr.length;i++){
-      if (!!Dictionary.find({word:wordsArr[i]}).count()){
+      if (!!Dictionary.find({word:wordsArr[i].toLowerCase()}).count()){
         out.push({
           word: wordsArr[i],
           exists: true

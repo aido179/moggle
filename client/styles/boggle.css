@@ -38,13 +38,15 @@
 .timeup-message{
   width: 100%;
   text-align: center;
-  font-family: 'Pacifico', cursive;
   font-size: 1em;
   position: absolute;
   top: 47%;
-  transform: translateY(-50%);
+  transform: translateY(-53%);
   color: #fff;
   text-shadow: 2px 2px 8px rgb(0, 0, 0);
+}
+.timeup-message h1{
+  font-family: 'Pacifico', cursive;
 }
 .boardscaleimg{
 	min-width: 100%;

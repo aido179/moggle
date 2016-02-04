@@ -107,7 +107,7 @@ getWordScore = function(word){
 }
 getScore = function(){
   var score = 0;
-  var words = Session.get('words');
+  var words = Session.get('verified');
   for(i=0;i<words.length;i++){
     score+=getWordScore(words[i]);
   }
