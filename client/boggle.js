@@ -19,7 +19,7 @@ Template.boggle.helpers({
     return Session.get('dice');
   },
   words: function(){
-    return Session.get('words');
+    return Session.get('words').slice().reverse();
   },
   timer: function(){
     return Session.get('time');

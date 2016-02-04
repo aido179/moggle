@@ -12,7 +12,7 @@ Template.user.helpers({
         score: getScore(doc.words)
       });
     });
-    return gamesOut;
+    return gamesOut.reverse();
   },
   username: function(){
     var username;
