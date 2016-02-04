@@ -25,8 +25,18 @@ Template.user.helpers({
     return username;
   },
   challenges: function(){
-    console.log(Challenges.find({}));
     return Challenges.find({});
+  },
+  hasPlayedChallenge: function(id){
+    var c = Challenges.findOne({_id:id});
+    for(i=0;i<c.players.length;i++){
+      if (c.players[i].username === Meteor.user().username){
+        if(c.players[i].played){
+          return false;
+        }
+        return true;
+      }
+    }
   }
 });
 

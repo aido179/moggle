@@ -37,17 +37,29 @@
         </div>
         <div class="wordList well">
            <h2>Your Challenges:</h2>
-           {{#each chal in challenges}}
-            {{#each chal.players}}
-              {{this.username}}
-              {{#if this.played}}
-                <span class="badge">{{this.score}}</span>
-              {{else}}
-                <span class="badge">?</span>
+           <ul class="list-group">
+             {{#each chal in challenges}}
+             <li class="list-group-item">
+             {{#each chal.players}}
+
+                {{#if this.played}}
+                <a href="#" class="btn btn-primary disabled" role="button">
+                  {{this.username}}
+                  <span class="badge">{{this.score}}</span>
+                </a>
+
+                {{else}}
+                <a href="#" class="btn btn-default disabled" role="button">
+                  {{this.username}}
+                </a>
+                {{/if}}
+              {{/each}}
+              {{#if hasPlayedChallenge chal._id}}
+                <a class="pull-right btn btn-success" href="/challenge/{{chal._id}}">Play</a>
               {{/if}}
+            </li>
             {{/each}}
-            <a href="/challenge/{{chal._id}}">Play</a><br>
-           {{/each}}
+          </ul>
         </div>
       </div>
     </div>
