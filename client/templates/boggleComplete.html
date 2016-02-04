@@ -27,19 +27,43 @@
       </div>
       <div class="col-sm-6 col-xs-12">
         <div class="wordList well">
-          <h2>Your Score: {{score}}</h2>
-          <h3>Words:</h3>
-          <ul>
-            {{#each words}}
-            <li>{{this.word}} ({{this.score}})</li>
-            {{/each}}
-          </ul>
-          <h3>Discarded Words:</h3>
-          <ul>
-            {{#each unverifiedWords}}
-            <li>{{this}}</li>
-            {{/each}}
-          </ul>
+          {{#if scoreLoaded}}
+            <h2>Your Score: {{score}}</h2>
+            <h3>Words:</h3>
+            <ul>
+              {{#each words}}
+              <li>{{this.word}} ({{this.score}})</li>
+              {{/each}}
+            </ul>
+            <h3>Discarded Words:</h3>
+            <ul>
+              {{#each unverifiedWords}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <!-- loading spinner -->
+            <div class="scoreLoading">
+              <h2> Calculating Score </h2>
+              <div class="windows8">
+              	<div class="wBall" id="wBall_1">
+              		<div class="wInnerBall"></div>
+              	</div>
+              	<div class="wBall" id="wBall_2">
+              		<div class="wInnerBall"></div>
+              	</div>
+              	<div class="wBall" id="wBall_3">
+              		<div class="wInnerBall"></div>
+              	</div>
+              	<div class="wBall" id="wBall_4">
+              		<div class="wInnerBall"></div>
+              	</div>
+              	<div class="wBall" id="wBall_5">
+              		<div class="wInnerBall"></div>
+              	</div>
+              </div>
+            </div>
+          {{/if}}
         </div>
       </div>
     </div>

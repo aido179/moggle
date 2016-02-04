@@ -1,13 +1,13 @@
 Session.setDefault('verified', []);
 Session.setDefault('unverified', []);
 Session.setDefault('score', 0);
+Session.setDefault('scoreLoaded', false);
 
 Template.boggleComplete.onRendered(function(){
-  //var d = Session.get('dice');
-  //console.log(d)
   var words = Session.get('words');
   Session.set('verified', []);
   Session.set('unverified', []);
+  Session.set('scoreLoaded', false);
 
   Meteor.call("checkWords", words, function(err, res){
     for(i=0;i<res.length;i++){
@@ -26,6 +26,7 @@ Template.boggleComplete.onRendered(function(){
       }
     }
     Session.set('score', getScore());
+    Session.set('scoreLoaded', true);
   });
 });
 
@@ -54,5 +55,8 @@ Template.boggleComplete.helpers({
   },
   score: function(){
     return Session.get('score');
+  },
+  scoreLoaded: function(){
+    return Session.get('scoreLoaded');
   }
 });
