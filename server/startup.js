@@ -1,4 +1,6 @@
 Meteor.startup(function () {
+  Dictionary._ensureIndex({ "word": 1});
+  
   if (Dictionary.find().count() === 0) {
     console.log("Populating dictionary...");
     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

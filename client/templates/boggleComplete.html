@@ -24,10 +24,16 @@
       </div>
       <div class="col-sm-6 col-xs-12">
         <div class="wordList well">
-           <h2>Your Score: {{score}}</h2>
-           <h3>Words:</h3>
+          <h2>Your Score: {{score}}</h2>
+          <h3>Words:</h3>
           <ul>
             {{#each words}}
+            <li>{{this.word}} ({{this.score}})</li>
+            {{/each}}
+          </ul>
+          <h3>Discarded Words:</h3>
+          <ul>
+            {{#each unverifiedWords}}
             <li>{{this.word}} ({{this.score}})</li>
             {{/each}}
           </ul>

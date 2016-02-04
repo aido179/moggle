@@ -19,5 +19,22 @@ Meteor.methods({
       throw new Meteor.Error("not-authorized");
     }
     Accounts.setUsername(Meteor.userId(), username);
+  },
+  checkWords: function(wordsArr){
+    var out = [];
+    for(i=0;i<wordsArr.length;i++){
+      if (!!Dictionary.find({word:wordsArr[i]}).count()){
+        out.push({
+          word: wordsArr[i],
+          exists: true
+        });
+      }else{
+        out.push({
+          word: wordsArr[i],
+          exists: false
+        });
+      }
+    }
+    return out;
   }
 });
