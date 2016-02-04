@@ -10,7 +10,7 @@ Template.user.helpers({
       gamesOut.push({
         finished: moment(doc.finished).format('ll'),
         wordCount: doc.words.length,
-        score: getScore(doc.words)
+        score: doc.score
       });
     });
     return gamesOut.reverse();

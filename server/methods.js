@@ -11,6 +11,13 @@ Meteor.methods({
       words: data["words"]
     });
   },
+  updateScore: function(hash, score){
+    //{player:Meteor.userId(), hash:gameHash}
+    Games.update(
+      {hash:hash, player:Meteor.userId()},
+      {$set:{score:score}}
+    );
+  },
   checkGame: function(gameHash){
     return !!Games.find({player:Meteor.userId(), hash:gameHash}).count();
   },
@@ -46,14 +53,13 @@ Meteor.methods({
       //make sure usernames exist and are not duplicated.
       if((!!Meteor.users.find({username: users[i]}).count()) && checkedUsernames.indexOf(users[i]) == -1){
         checkedUsers.push({username: users[i], played:false});
-        checkedUsernames.push(users[i]);
       }
+      checkedUsernames.push(users[i]);
     }
     //make sure the user creating the challenge is included.
-    if(checkedUsers.indexOf(Meteor.user().username) == -1){
+    if(checkedUsernames.indexOf(Meteor.user().username) == -1){
       checkedUsers.push({username: Meteor.user().username, played:false});
     }
-
     //get a game hash for the challenge.
     var game = getGameHash(getGame());
     //insert the challenge
@@ -61,5 +67,12 @@ Meteor.methods({
       players: checkedUsers,
       hash: game
     });
+  },
+  completeChallenge: function(chal_id, score){
+    var username = Meteor.user().username;
+    Challenges.update(
+      {_id:chal_id, "players.username":username},
+      { $set: {"players.$.played":true, "players.$.score":score }}
+    );
   }
 });

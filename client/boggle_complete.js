@@ -2,13 +2,16 @@ Session.setDefault('verified', []);
 Session.setDefault('unverified', []);
 Session.setDefault('score', 0);
 Session.setDefault('scoreLoaded', false);
+var params;
 
 Template.boggleComplete.onRendered(function(){
-  var words = Session.get('words');
+  //get params
+  params = Iron.controller().getParams();
+  //Calculate score
   Session.set('verified', []);
   Session.set('unverified', []);
   Session.set('scoreLoaded', false);
-
+  var words = Session.get('words');
   Meteor.call("checkWords", words, function(err, res){
     for(i=0;i<res.length;i++){
       //check the word's existance
@@ -25,9 +28,19 @@ Template.boggleComplete.onRendered(function(){
         Session.set('unverified',v);
       }
     }
-    Session.set('score', getScore());
+    var score = getScore();
+    Session.set('score', score);
     Session.set('scoreLoaded', true);
+
+    //store challenge
+    if(params.chal_id != undefined){
+      Meteor.call("completeChallenge", params.chal_id, score);
+    }
+    //store user score
+    var hash = getGameHash(Session.get('dice'));
+    Meteor.call("updateScore", hash, score);
   });
+
 });
 
 Template.boggleComplete.helpers({

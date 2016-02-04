@@ -20,7 +20,7 @@
           <h2>Your games:</h2>
           <ul>
           {{#each games}}
-            <li><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: ...</li>
+            <li><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: {{this.score}}</li>
           {{/each}}
         </ul>
         </div>
@@ -39,9 +39,14 @@
            <h2>Your Challenges:</h2>
            {{#each chal in challenges}}
             {{#each chal.players}}
-              {{this.username}} - {{this.played}}
+              {{this.username}}
+              {{#if this.played}}
+                <span class="badge">{{this.score}}</span>
+              {{else}}
+                <span class="badge">?</span>
+              {{/if}}
             {{/each}}
-            [{{chal.hash}}]<br>
+            <a href="/challenge/{{chal._id}}">Play</a><br>
            {{/each}}
         </div>
       </div>

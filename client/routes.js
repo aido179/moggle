@@ -25,6 +25,17 @@ Router.route('/boggle/:gamehash', function () {
   this.render('boggle');
 });
 
+Router.route('/challenge/:chal_id', function(){
+  var chal_id = this.params.chal_id;
+  var chal = Challenges.findOne({_id:chal_id});
+  Session.set('dice',getGameFromHash(chal.hash));
+  this.render('boggle');
+});
+
+Router.route('/challengeComplete/:chal_id', function(){
+  this.render('boggleComplete');
+});
+
 Router.route('/boggle', function () {
   Session.set('dice',getGame());
   this.render('boggle');

@@ -15,6 +15,11 @@ Schemas.Games = new SimpleSchema({
         type:String,
         label:"Player"
     },
+    score: {
+        type:String,
+        label:"Player score",
+        optional:true
+    },
     words: {
         type: Array,
         optional: true
@@ -48,6 +53,11 @@ Schemas.Challenges = new SimpleSchema({
     "players.$.played": {
         type: Boolean,
         label: "Has the player played this Challenge?"
+    },
+    "players.$.score": {
+        type: Number,
+        label: "Players score",
+        optional:true
     }
 });
 Challenges.attachSchema(Schemas.Challenges);

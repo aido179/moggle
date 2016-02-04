@@ -6,12 +6,13 @@ var startTime = moment();
 var word = [];
 var letterEls = [];
 var draggingLetter = false;
-
+var params;
 
 Template.boggle.onRendered(function(){
   Session.set('words', []);
   startTime = moment();
   updateTime();
+  params = Iron.controller().getParams();
 });
 
 Template.boggle.helpers({
@@ -103,14 +104,11 @@ function finishWord(){
 function updateTime(){
   //check for timout
   if( moment(startTime).add(3,'minutes').diff(moment(), 'seconds') <= 0){
-    var data = {
-      gameHash: getGameHash(Session.get('dice')),
-      words: Session.get('words')
-    };
-    Meteor.call("addGame", data);
-    Router.go('/boggleComplete');
+    //Game Over
+    endGame();
     Session.set('time',"0:00");
   }else{
+    //Continue Game
     var seconds = moment(startTime).add(3,'minutes').diff(moment(), 'seconds');
     var mins = Math.abs(Math.floor(seconds / 60));
     var secs = pad(seconds % 60,2);
@@ -125,10 +123,16 @@ function pad(n, width, z) {
 }
 //End game early for testing purposes
 endGame = function(){
+  //Store game
   var data = {
     gameHash: getGameHash(Session.get('dice')),
     words: Session.get('words')
   };
   Meteor.call("addGame", data);
-  Router.go('/boggleComplete');
+  //check if challenge...
+  if(params.chal_id != undefined){
+    Router.go('/challengeComplete/'+params.chal_id);
+  }else{
+    Router.go('/boggleComplete');
+  }
 }
