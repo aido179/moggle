@@ -6,10 +6,13 @@
   font-family: 'Pacifico', cursive;
   margin-right: 1em;
   padding: 1em;
-  color: #eee;
   -webkit-box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.35);
   -moz-box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.35);
   box-shadow: 0px 3px 10px 0px rgba(50, 50, 50, 0.35);
+}
+.logo a{
+  text-decoration:none;
+  color: #eee;
 }
 .headerLink{
   margin-left:1em;
