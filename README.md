@@ -23,6 +23,8 @@ You can challenge other players to games. Click on 'my account', and type a user
 ##Technology
 Moggle is built using [meteor](http://www.meteor.com), with blaze. [Bootstrap](http://getbootstrap.com) is used for UI elements and layout. Simple.
 
+The word list used is the [EOWL](http://dreamsteep.com/projects/the-english-open-word-list.html)
+
 ##Roadmap
 Here's what I want to get working (eventually). Pull requests are most welcome. 
 
