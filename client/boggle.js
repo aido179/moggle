@@ -7,6 +7,7 @@ var word = [];
 var letterEls = [];
 var draggingLetter = false;
 var params;
+var timer;
 
 Template.boggle.onRendered(function(){
   Session.set('words', []);
@@ -29,6 +30,11 @@ Template.boggle.helpers({
 
 
 Template.boggle.events({
+  'click .endGame': function(event){
+    Router.go('/boggleComplete');
+    console.log("end game");
+    endGame();
+  },
   'mousedown .diceletter, touchstart .diceletter': function(event){
     draggingLetter = true;
     addLetter(event.currentTarget);
@@ -113,7 +119,8 @@ function updateTime(){
     var mins = Math.abs(Math.floor(seconds / 60));
     var secs = pad(seconds % 60,2);
     Session.set('time',mins+":"+secs);
-    Meteor.setTimeout(updateTime, 1000);
+    var t = Meteor.setTimeout(updateTime, 1000);
+    Session.set('timer',t);
   }
 }
 function pad(n, width, z) {
@@ -123,6 +130,8 @@ function pad(n, width, z) {
 }
 //End game early for testing purposes
 endGame = function(){
+  var t = Session.get('timer');
+  Meteor.clearTimeout(t);
   //Store game
   var data = {
     gameHash: getGameHash(Session.get('dice')),
@@ -131,8 +140,10 @@ endGame = function(){
   Meteor.call("addGame", data);
   //check if challenge...
   if(params.chal_id != undefined){
+    console.log("got to func 1");
     Router.go('/challengeComplete/'+params.chal_id);
   }else{
+    console.log("got to func 2");
     Router.go('/boggleComplete');
   }
 }

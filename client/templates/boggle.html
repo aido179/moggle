@@ -20,16 +20,21 @@
         </div>
       </div>
       <div class="col-md-6 col-sm-12">
-        <div class="wordList well">
-          <h2><span class="glyphicon glyphicon-time"></span> {{timer}}</h2>
-          <h3>Words:</h3>
-          <ul>
-            {{#each words}}
-            <li>{{this}}</li>
-            {{else}}
-            <li>(Click and drag the letters!)</li>
-            {{/each}}
-          </ul>
+        <div class="wordList panel panel-default">
+          <div class="panel-heading game-controls">
+            <span class="glyphicon glyphicon-time"></span> {{timer}}
+            <button class="btn btn-default pull-right endGame" >Finish</button>
+          </div>
+          <div class="panel-body">
+            <h3>Words:</h3>
+            <ul>
+              {{#each words}}
+              <li>{{this}}</li>
+              {{else}}
+              <li>(Click and drag the letters!)</li>
+              {{/each}}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -52,13 +52,15 @@ Meteor.methods({
     for(i=0;i<users.length;i++){
       //make sure usernames exist and are not duplicated.
       if((!!Meteor.users.find({username: users[i]}).count()) && checkedUsernames.indexOf(users[i]) == -1){
-        checkedUsers.push({username: users[i], played:false});
+        var user_id =  Accounts.findUserByUsername(users[i])._id;
+        checkedUsers.push({username: users[i], user_id: user_id,  played:false});
       }
       checkedUsernames.push(users[i]);
     }
     //make sure the user creating the challenge is included.
     if(checkedUsernames.indexOf(Meteor.user().username) == -1){
-      checkedUsers.push({username: Meteor.user().username, played:false});
+      var user_id = Meteor.user()._id;
+      checkedUsers.push({username: Meteor.user().username, user_id: user_id, played:false});
     }
     //get a game hash for the challenge.
     var game = getGameHash(getGame());
@@ -74,5 +76,8 @@ Meteor.methods({
       {_id:chal_id, "players.username":username},
       { $set: {"players.$.played":true, "players.$.score":score }}
     );
+  },
+  getUserGame: function(user, hash){
+    return Games.findOne({hash:hash, player:user}).words;
   }
 });

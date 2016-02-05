@@ -50,6 +50,10 @@ Schemas.Challenges = new SimpleSchema({
         type: String,
         label: "Player username"
     },
+    "players.$.user_id": {
+        type: String,
+        label: "Player _id"
+    },
     "players.$.played": {
         type: Boolean,
         label: "Has the player played this Challenge?"

@@ -9,6 +9,7 @@
   max-width:60vh;
   margin-left:auto;
   margin-right:auto;
+  margin-bottom:1em;
   padding: 15px;
   border-width: 1em;
   border-style: solid;
@@ -40,6 +41,13 @@
 	bottom: 0;
 	right: 0;
   background-color: rgba(0,0,0,0.2);
+}
+.game-controls{
+  font-size:2em;
+}
+.wordList{
+  max-width:60vh;
+  margin: 0 auto;
 }
 .timeup-message{
   width: 100%;
@@ -103,8 +111,4 @@
   .diceletter{
     font-size: 3em;
   }
-}
-.wordList{
-  max-width:60vh;
-  margin: 0 auto;
 }
