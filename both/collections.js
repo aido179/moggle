@@ -24,10 +24,18 @@ Schemas.Games = new SimpleSchema({
         type: Array,
         optional: true
     },
-    "words.$": {
-        type: String
+    "words.$":{
+      type: Object
     },
-    finished: {
+    "words.$.word": {
+        type: String,
+        label: "Word player found in game"
+    },
+    "words.$.score": {
+        type: Number,
+        label: "Score calculated for word"
+    },
+    created: {
       type: Date
     }
 });

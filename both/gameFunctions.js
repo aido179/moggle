@@ -77,7 +77,6 @@ getGame = function(){
   return gameOut;
 }
 getGameFromHash = function(gameHash){
-  console.log(gameHash);
   //parse string to array - replacing Qu's with just Qs
   var game = gameHash.replace("Qu","Q").split("");
   var gameOut = [];
@@ -105,14 +104,6 @@ getWordScore = function(word){
   }
   return score
 }
-getScore = function(){
-  var score = 0;
-  var words = Session.get('verified');
-  for(i=0;i<words.length;i++){
-    score+=getWordScore(words[i]);
-  }
-  return score;
-}
 getGameHash = function(game){
   //used to identify unique games.
   var hash = "";
@@ -137,4 +128,11 @@ getAdjacencyArray = function(i){
     adj["SW"] = i-1+4;
   }
   return adj;
+}
+newGameSession = function(){
+  Session.set('playing', true);
+  Session.set('isChallenge', false);
+  Session.set('words',[]);
+  Session.set('score', 0);
+  Session.set('dice', getGame());
 }

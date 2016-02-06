@@ -1,10 +1,10 @@
-<template name="boggleComplete">
+<template name="boggleGame">
   <div class="container">
     <div class="row game-header">
       <h1>Moggle{{#if isChallenge}} Challenge{{/if}}</h1>
     </div>
     <div class="row">
-      <div class="col-sm-6 col-xs-12">
+      <div class="col-md-6 col-sm-12">
         <div class="board">
           <div class="board-content">
             {{#each d in dice}}
@@ -17,28 +17,26 @@
               </div>
             {{/each}}
           </div>
-          <div class="board-over">
-            <div class="timeup-message">
-              <h1>Time's Up!</h1>
-              <a class="btn btn-primary btn-lg playagain">Play Again</a>
-            </div>
-          </div>
         </div>
       </div>
-      <div class="col-sm-6 col-xs-12">
-        <div class="wordList well">
-            <h2>Your Score: {{score}}</h2>
-            {{#if isChallenge}}<h2>Opponents score: 1billion</h2>{{/if}}
+      <div class="col-md-6 col-sm-12">
+        <div class="wordList panel panel-default">
+          <div class="panel-heading game-controls">
+            <span class="glyphicon glyphicon-time"></span> {{timer}}
+            <button class="btn btn-default pull-right endGame" >Finish</button>
+          </div>
+          <div class="panel-body">
             <h3>Words:</h3>
             <ul>
               {{#with game}}
                 {{#each game.words}}
                 <li>{{this.word}} ({{this.score}})</li>
                 {{else}}
-                <li>No words found.</li>
+                <li>(Click and drag the letters!)</li>
                 {{/each}}
               {{/with}}
             </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -2,48 +2,48 @@ Router.configure({
   layoutTemplate: 'ApplicationLayout'
 });
 
-
 Router.route('/', function () {
   this.render('home');
 });
 
-Router.route('/boggle/:gamehash', function () {
-  //generate the game
-  var hash = this.params.gamehash;
-  if(hash.length!=16){
-    Session.set('dice',getGame());
-  }else{
-    Session.set('dice',getGameFromHash(hash));
-  }
-  //make sure the user has not already played this game
-  Meteor.call("checkGame",getGameHash(Session.get('dice')),function(error, result){
-    if(result){
-      Router.go('/boggleError');
-    }
-  });
-
-  this.render('boggle');
-});
-
 Router.route('/challenge/:chal_id', function(){
-  var chal_id = this.params.chal_id;
-  var chal = Challenges.findOne({_id:chal_id});
-  Session.set('dice',getGameFromHash(chal.hash));
-  this.render('boggle');
-});
+  // add the subscription handle to our waitlist
+    this.wait(Meteor.subscribe('Challenges'));
+    // this.ready() is true if all items in the wait list are ready
+    if (this.ready()) {
+      var chal_id = this.params.chal_id;
+      var c = Challenges.findOne({_id:chal_id});
+      //make sure user has not yet played this challenge
+      var hasPlayed = false;
+      for(i=0;i<c.players.length;i++){
+        if (c.players[i].username === Meteor.user().username){
+          if(c.players[i].played){
+            hasPlayed = true;
+          }
+        }
+      }
+      if(hasPlayed){
+        Session.set('playing', false);
+      }else{
+        Session.set('playing', true);
+      }
+      Session.set('dice',getGameFromHash(c.hash));
+      Session.set('isChallenge', true);
+      this.render('boggle');
+    } else {
+      this.render('boggleLoading');
+    }
+},{name:"boggle.challenge"});
 
-Router.route('/challengeComplete/:chal_id', function(){
-  this.render('boggleComplete');
+Router.route('/playAgain', function(){
+  this.redirect('/boggle');
 });
 
 Router.route('/boggle', function () {
-  Session.set('dice',getGame());
+  newGameSession();
   this.render('boggle');
 });
 
-Router.route('/boggleComplete', function () {
-  this.render('boggleComplete');
-});
 Router.route('/boggleError', function () {
   this.render('boggleError');
 });

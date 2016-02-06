@@ -1,42 +1,9 @@
 <template name="boggle">
-  <div class="container">
-    <div class="row game-header">
-      <h1>Moggle</h1>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <div class="board">
-          <div class="board-content">
-            {{#each d in dice}}
-              <div class="box">
-                <div class="dice">
-                  <div class="diceletter" data-letter="{{d.letter}}" data-order="{{d.order}}">
-                    {{d.letter}}
-                  </div>
-                </div>
-              </div>
-            {{/each}}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-12">
-        <div class="wordList panel panel-default">
-          <div class="panel-heading game-controls">
-            <span class="glyphicon glyphicon-time"></span> {{timer}}
-            <button class="btn btn-default pull-right endGame" >Finish</button>
-          </div>
-          <div class="panel-body">
-            <h3>Words:</h3>
-            <ul>
-              {{#each words}}
-              <li>{{this}}</li>
-              {{else}}
-              <li>(Click and drag the letters!)</li>
-              {{/each}}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {{#if playing}}
+    <!-- Playing Game -->
+    {{> boggleGame}}
+  {{else}}
+    <!-- Game Over -->
+    {{> boggleComplete}}
+  {{/if}}
 </template>

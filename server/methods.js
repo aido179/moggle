@@ -1,17 +1,18 @@
 Meteor.methods({
-  addGame: function (data) {
+  addGame: function (gameHash) {
     // Make sure the user is logged in before inserting a task
     if (! Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
     Games.insert({
       player: Meteor.userId(),
-      finished: new Date(),
-      hash: data["gameHash"],
-      words: data["words"]
+      created: new Date(),
+      hash: gameHash,
+      words:[]
     });
   },
   updateScore: function(hash, score){
+    console.log(hash+" "+score);
     //{player:Meteor.userId(), hash:gameHash}
     Games.update(
       {hash:hash, player:Meteor.userId()},
@@ -27,22 +28,22 @@ Meteor.methods({
     }
     Accounts.setUsername(Meteor.userId(), username);
   },
-  checkWords: function(wordsArr){
-    var out = [];
-    for(i=0;i<wordsArr.length;i++){
-      if (!!Dictionary.find({word:wordsArr[i].toLowerCase()}).count()){
-        out.push({
-          word: wordsArr[i],
-          exists: true
-        });
-      }else{
-        out.push({
-          word: wordsArr[i],
-          exists: false
-        });
-      }
+  // checks a word exists, saves the users selection, and returns the word score
+  // score = 0 for non-words
+  checkWord: function(word, hash){
+    var lowerWord = word.toLowerCase();
+    var score = 0;
+    if (!!Dictionary.find({word:lowerWord}).count()){
+      score = getWordScore(word);
+      Games.update(
+        {hash:hash, player:Meteor.userId()},
+        {$push:{words:{score:score, word:word}}}
+      );
+      return score;
+    }else{
+      return 0;
     }
-    return out;
+    return score;
   },
   createChallenge: function(usersString){
     //usersString is the string the user wrote with usernames.
