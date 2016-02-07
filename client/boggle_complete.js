@@ -1,8 +1,10 @@
 Session.setDefault('score', 0);
+Session.setDefault('chal_id', 0);
 
 Template.boggleComplete.onRendered(function(){
   //get params
-    var params = Iron.controller().getParams();
+    params = Iron.controller().getParams();
+    Session.set('chal_id', params.chal_id);
     var score = Session.get('score');
     //store challenge
     if(Session.get('isChallenge')){
@@ -22,6 +24,10 @@ Template.boggleComplete.helpers({
   },
   score: function(){
     return Session.get('score');
+  },
+  challenge: function(){
+    //Challenges.findOne({_id:Session.get('chal_id')})
+    return Challenges.findOne({_id:Session.get('chal_id')});
   },
   isChallenge: function(){
     return Session.get('isChallenge');

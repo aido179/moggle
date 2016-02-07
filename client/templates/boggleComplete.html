@@ -28,7 +28,19 @@
       <div class="col-sm-6 col-xs-12">
         <div class="wordList well">
             <h2>Your Score: {{score}}</h2>
-            {{#if isChallenge}}<h2>Opponents score: 1billion</h2>{{/if}}
+            <hr>
+            {{#if isChallenge}}
+              {{#each player in challenge.players}}
+                <h3>{{player.username}}:
+                  {{#if player.played}}
+                    {{player.score}}
+                  {{else}}
+                    Has not played yet.
+                  {{/if}}
+                </h3>
+              {{/each}}
+            {{/if}}
+            <hr>
             <h3>Words:</h3>
             <ul>
               {{#with game}}
