@@ -12,7 +12,6 @@ Meteor.methods({
     });
   },
   updateScore: function(hash, score){
-    console.log(hash+" "+score);
     //{player:Meteor.userId(), hash:gameHash}
     Games.update(
       {hash:hash, player:Meteor.userId()},
@@ -39,11 +38,11 @@ Meteor.methods({
         {hash:hash, player:Meteor.userId()},
         {$push:{words:{score:score, word:word}}}
       );
-      return score;
+      return {word:word, score:score};
     }else{
-      return 0;
+      return {word:word, score:0};
     }
-    return score;
+    return {word:word, score:score};
   },
   createChallenge: function(usersString){
     //usersString is the string the user wrote with usernames.

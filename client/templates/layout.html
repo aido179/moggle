@@ -13,6 +13,8 @@
       {{> loginButtons}}
       {{#if currentUser}}
         <a href="/user" class="headerLink"> My account </a>
+      {{else}}
+        Logging in...
       {{/if}}
     </div>
     {{> yield}}

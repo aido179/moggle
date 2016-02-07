@@ -114,13 +114,13 @@ function finishWord(){
     var words = Session.get('words');
     if(words.indexOf(word.join(""))==-1){
       //save and score word
-      Meteor.call("checkWord", word.join(""), getGameHash(Session.get('dice')), function(err, wordscore){
+      Meteor.call("checkWord", word.join(""), getGameHash(Session.get('dice')), function(err, word_score){
         //update session score
         var score = Session.get('score');
-        score+=wordscore;
+        score+=word_score.score;
         Session.set('score', score);
         //update session words
-        words.push(word.join(""));
+        words.push(word_score.word);
         Session.set('words',words);
       });
     }else{
