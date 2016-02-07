@@ -2,17 +2,12 @@ Session.setDefault('score', 0);
 Session.setDefault('chal_id', 0);
 
 Template.boggleComplete.onRendered(function(){
-  //get params
-    params = Iron.controller().getParams();
-    Session.set('chal_id', params.chal_id);
-    var score = Session.get('score');
-    //store challenge
+    //get params
     if(Session.get('isChallenge')){
-      Meteor.call("completeChallenge", params.chal_id, score);
+      params = Iron.controller().getParams();
+      Session.set('chal_id', params.chal_id);
     }
-    //store user score
-    var hash = getGameHash(Session.get('dice'));
-    Meteor.call("updateScore", hash, score);
+
 });
 
 Template.boggleComplete.helpers({

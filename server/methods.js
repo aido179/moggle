@@ -8,11 +8,11 @@ Meteor.methods({
       player: Meteor.userId(),
       created: new Date(),
       hash: gameHash,
+      score: "0",
       words:[]
     });
   },
   updateScore: function(hash, score){
-    //{player:Meteor.userId(), hash:gameHash}
     Games.update(
       {hash:hash, player:Meteor.userId()},
       {$set:{score:score}}

@@ -18,6 +18,10 @@ Template.boggleGame.onRendered(function(){
   updateTime();
   //Store game
   Meteor.call("addGame", getGameHash(Session.get('dice')));
+  if(Session.get('isChallenge')){
+    params = Iron.controller().getParams();
+    Session.set('chal_id', params.chal_id);
+  }
 });
 
 Template.boggleGame.helpers({
@@ -155,7 +159,7 @@ function pad(n, width, z) {
   n = n + '';
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
-//End game early for testing purposes
+
 endGame = function(){
   //clear word
   word = [];
@@ -164,5 +168,16 @@ endGame = function(){
   //stop timer
   var t = Session.get('timer');
   Meteor.clearTimeout(t);
+  //
+  console.log("storing game...");
+  var score = Session.get('score');
+  console.log("score:"+score);
+  //store challenge
+  if(Session.get('isChallenge')){
+    Meteor.call("completeChallenge", params.chal_id, score);
+  }
+  //store user score
+  var hash = getGameHash(Session.get('dice'));
+  Meteor.call("updateScore", hash, score);
 
 }

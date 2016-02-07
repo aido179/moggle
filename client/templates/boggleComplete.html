@@ -27,8 +27,7 @@
       </div>
       <div class="col-sm-6 col-xs-12">
         <div class="wordList well">
-            <h2>Your Score: {{score}}</h2>
-            <hr>
+
             {{#if isChallenge}}
               {{#each player in challenge.players}}
                 <h3>{{player.username}}:
@@ -39,6 +38,8 @@
                   {{/if}}
                 </h3>
               {{/each}}
+            {{else}}
+            <h2>Your Score: {{score}}</h2>
             {{/if}}
             <hr>
             <h3>Words:</h3>

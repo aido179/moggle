@@ -5,7 +5,7 @@ Meteor.subscribe("userData");
 Template.user.helpers({
   games: function () {
     gamesOut = [];
-    var g = Games.find({}, {sort: {finished: -1}, limit: 15});
+    var g = Games.find({score:{$ne:"0"}}, {sort: {created: -1}, skip:0 , limit: 15});
     g.forEach(function(doc) {
       if(doc.words==undefined){
         doc.words = [];
@@ -16,7 +16,7 @@ Template.user.helpers({
         score: doc.score
       });
     });
-    return gamesOut.reverse();
+    return gamesOut;
   },
   username: function(){
     var username;
