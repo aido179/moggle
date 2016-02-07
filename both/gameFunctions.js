@@ -133,6 +133,7 @@ newGameSession = function(){
   Session.set('playing', true);
   Session.set('isChallenge', false);
   Session.set('words',[]);
+  word = [];
   Session.set('score', 0);
   Session.set('dice', getGame());
 }

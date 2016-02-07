@@ -34,6 +34,10 @@ Template.boggleGame.helpers({
   game: function(){
     return Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()})
   },
+  gameWords: function(){
+    var gameWordsArray = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()}).words;
+    return gameWordsArray.reverse();
+  },
   timer: function(){
     return Session.get('time');
   },
@@ -155,6 +159,8 @@ function pad(n, width, z) {
 }
 //End game early for testing purposes
 endGame = function(){
+  //clear word
+  word = [];
   //update game state
   Session.set('playing', false);
   //stop timer

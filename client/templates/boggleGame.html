@@ -28,13 +28,11 @@
           <div class="panel-body">
             <h3>Words:</h3>
             <ul>
-              {{#with game}}
-                {{#each game.words}}
+                {{#each gameWords}}
                 <li>{{this.word}} ({{this.score}})</li>
                 {{else}}
                 <li>(Click and drag the letters!)</li>
                 {{/each}}
-              {{/with}}
             </ul>
           </div>
         </div>
