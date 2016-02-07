@@ -12,13 +12,6 @@ var timer;
 Template.boggleGame.onRendered(function(){
   //Challenge dice are set on the router.
 
-  //make sure use has not already played this challenge game.
-//
-  //if (Session.get('playing')){
-
-  //}
-
-
   Session.set('words', []);
   Session.set('score', 0);
   startTime = moment();
@@ -35,8 +28,13 @@ Template.boggleGame.helpers({
     return Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()})
   },
   gameWords: function(){
-    var gameWordsArray = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()}).words;
-    return gameWordsArray.reverse();
+    var g = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()});
+    if(g === undefined){
+      return [];
+    }else{
+      var gameWordsArray = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()}).words;
+      return gameWordsArray.reverse();
+    }
   },
   timer: function(){
     return Session.get('time');
