@@ -29,7 +29,7 @@
             <h3>Words:</h3>
             <ul>
                 {{#each gameWordsUnchecked}}
-                <li class="unchecked">{{this}} <span class="loader">...</span></li>
+                <li class="unchecked">{{this}} <div class="typing_loader"></div></li>
                 {{/each}}
                 {{#each gameWords}}
                 <li class="checked">{{this.word}} ({{this.score}})</li>
