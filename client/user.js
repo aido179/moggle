@@ -30,7 +30,7 @@ Template.user.helpers({
   challenges: function(){
     return Challenges.find({});
   },
-  hasPlayedChallenge: function(id){
+  hasNotPlayedChallenge: function(id){
     var c = Challenges.findOne({_id:id});
     for(i=0;i<c.players.length;i++){
       if (c.players[i].username === Meteor.user().username){

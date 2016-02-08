@@ -43,10 +43,13 @@
              {{#each chal.players}}
 
                 {{#if this.played}}
-                <a href="#" class="btn btn-primary challenge_user" data-user="{{this.user_id}}" data-hash="{{chal.hash}}" role="button">
-                  {{this.username}}
-                  <span class="badge">{{this.score}}</span>
-                </a>
+                  {{#if hasNotPlayedChallenge chal._id}}
+                    <a href="#" class="btn btn-primary" disabled=true role="button">{{this.username}}</a>
+                  {{else}}
+                    <a href="#" class="btn btn-primary challenge_user" data-user="{{this.user_id}}" data-hash="{{chal.hash}}" role="button">
+                      {{this.username}} <span class="badge">{{this.score}}</span>
+                    </a>
+                  {{/if}}
 
                 {{else}}
                 <a href="#" class="btn btn-default disabled" role="button">
@@ -54,8 +57,8 @@
                 </a>
                 {{/if}}
               {{/each}}
-              {{#if hasPlayedChallenge chal._id}}
-                <a class="pull-right btn btn-success" href="/challenge/{{chal._id}}">Play</a>
+              {{#if hasNotPlayedChallenge chal._id}}
+                <a class="pull-right btn btn-success clearfix" href="/challenge/{{chal._id}}">Play</a>
               {{/if}}
             </li>
             {{/each}}

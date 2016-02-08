@@ -136,6 +136,12 @@ function finishWord(){
       Session.set('unchecked', uncheck);
       //save and score word
       Meteor.call("checkWord", word.join(""), getGameHash(Session.get('dice')), function(err, word_score){
+        //remove from unchecked
+        var uncheck = Session.get('unchecked');
+        var ind = uncheck.indexOf(word_score.word);
+        uncheck.splice(ind, 1);
+        Session.set('unchecked',uncheck);
+
         if(word_score.score>0){
           //update session score
           var score = Session.get('score');
@@ -151,11 +157,7 @@ function finishWord(){
           discarded.push(word_score.word);
           Session.set('discarded', discarded);
         }
-        //remove from unchecked
-        var uncheck = Session.get('unchecked');
-        var ind = uncheck.indexOf(word_score.word);
-        uncheck.splice(ind, 1);
-        Session.set('unchecked',uncheck);
+
       });
     }else{
       //show duplicate warning
