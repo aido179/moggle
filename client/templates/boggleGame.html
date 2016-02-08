@@ -28,11 +28,21 @@
           <div class="panel-body">
             <h3>Words:</h3>
             <ul>
+                {{#each gameWordsUnchecked}}
+                <li class="unchecked">{{this}} <span class="loader">...</span></li>
+                {{/each}}
                 {{#each gameWords}}
-                <li>{{this.word}} ({{this.score}})</li>
+                <li class="checked">{{this.word}} ({{this.score}})</li>
                 {{else}}
                 <li>(Click and drag the letters!)</li>
                 {{/each}}
+            </ul>
+            <hr>
+            <h3>Discarded:</h3>
+            <ul>
+              {{#each discarded}}
+                <li class="discarded">{{this}}</li>
+              {{/each}}
             </ul>
           </div>
         </div>

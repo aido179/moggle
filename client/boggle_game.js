@@ -1,5 +1,7 @@
 
 Session.setDefault('words', []);
+Session.setDefault('discarded',[]);
+Session.setDefault('unchecked',[]);
 Session.setDefault('time', "3:00");
 Session.setDefault('score', 0);
 
@@ -9,10 +11,13 @@ var letterEls = [];
 var draggingLetter = false;
 var timer;
 
+
 Template.boggleGame.onRendered(function(){
   //Challenge dice are set on the router.
 
   Session.set('words', []);
+  Session.set('discarded', []);
+  Session.set('unchecked', []);
   Session.set('score', 0);
   startTime = moment();
   updateTime();
@@ -39,6 +44,12 @@ Template.boggleGame.helpers({
       var gameWordsArray = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()}).words;
       return gameWordsArray.reverse();
     }
+  },
+  gameWordsUnchecked: function(){
+    return Session.get('unchecked');
+  },
+  discarded: function(){
+    return Session.get('discarded');
   },
   timer: function(){
     return Session.get('time');
@@ -119,15 +130,32 @@ function finishWord(){
     //don't add duplicate words
     var words = Session.get('words');
     if(words.indexOf(word.join(""))==-1){
+      //add word to unchecked
+      var uncheck = Session.get('unchecked');
+      uncheck.push(word.join(""));
+      Session.set('unchecked', uncheck);
       //save and score word
       Meteor.call("checkWord", word.join(""), getGameHash(Session.get('dice')), function(err, word_score){
-        //update session score
-        var score = Session.get('score');
-        score+=word_score.score;
-        Session.set('score', score);
-        //update session words
-        words.push(word_score.word);
-        Session.set('words',words);
+        if(word_score.score>0){
+          //update session score
+          var score = Session.get('score');
+          score+=word_score.score;
+          Session.set('score', score);
+          //update session words
+          words.push(word_score.word);
+          Session.set('words',words);
+        }else{
+          //score == 0
+          //add to discarded
+          var discarded = Session.get('discarded');
+          discarded.push(word_score.word);
+          Session.set('discarded', discarded);
+        }
+        //remove from unchecked
+        var uncheck = Session.get('unchecked');
+        var ind = uncheck.indexOf(word_score.word);
+        uncheck.splice(ind, 1);
+        Session.set('unchecked',uncheck);
       });
     }else{
       //show duplicate warning

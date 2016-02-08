@@ -112,3 +112,9 @@
     font-size: 3em;
   }
 }
+li{
+  list-style-type: none;
+}
+.unchecked{
+  color:#A9A9A9;
+}

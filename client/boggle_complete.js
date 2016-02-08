@@ -20,6 +20,9 @@ Template.boggleComplete.helpers({
   score: function(){
     return Session.get('score');
   },
+  discarded: function(){
+    return Session.get('discarded');
+  },
   challenge: function(){
     //Challenges.findOne({_id:Session.get('chal_id')})
     return Challenges.findOne({_id:Session.get('chal_id')});
