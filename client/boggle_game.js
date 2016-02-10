@@ -56,7 +56,10 @@ Template.boggleGame.helpers({
   },
   isChallenge: function(){
     return Session.get('isChallenge');
-  }
+  },
+  define: ReactivePromise(function (word) {
+    return Meteor.callPromise("defineWord", word);
+  }, "loading...")
 });
 
 
