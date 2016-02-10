@@ -33,8 +33,13 @@ h1{
   font-size:4em;
   margin-bottom: 1em;
 }
-
+.usernameDiv{
+  margin-bottom: 3em;
+}
 .username-form, .challenge-form{
-  text-align:center;
-  margin: 10px auto;
+  margin: 10px 0;
+}
+
+.tab-content{
+  margin-top: 2em;
 }

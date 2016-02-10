@@ -4,67 +4,112 @@
       <h1>Moggle</h1>
     </div>
     <div class="row">
-      <div class="col-md-12">
-        <div class="wordList username-form">
+
+      <div class="col-md-8 col-md-offset-2 text-center usernameDiv">
+        {{#if noUsername}}
+        <div class="alert alert-success" role="alert">
           <form class="form-inline username-form-form">
             <div class="form-group">
-              <label for="username">Your Username</label>
+              <label for="username">Please select a username: </label>
               <input type="text" class="form-control username" id="username" placeholder="{{username}}" autocomplete="off">
             </div>
             <a href="#" class="btn btn-default usernameUpdate">Update</a>
           </form>
         </div>
+        {{else}}
+          <h3>Your username is <u>{{username}}</u>.</h3>
+        {{/if}}
       </div>
-      <div class="col-md-6 col-sm-12">
-        <div class="wordList well">
-          <h2>Recent games:</h2>
-          <ul>
-          {{#each games}}
-            <li><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: {{this.score}}</li>
-          {{/each}}
+
+
+      <!-- Navigation tabs  -->
+      <div class="col-md-8 col-md-offset-2">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#openChallenges" aria-controls="openChallenges" role="tab" data-toggle="tab">Open Challenges</a></li>
+          <li role="presentation"><a href="#pastChallenges" aria-controls="pastChallenges" role="tab" data-toggle="tab">Past Challenges</a></li>
+          <li role="presentation"><a href="#pastGames" aria-controls="pastGames" role="tab" data-toggle="tab">Past Games</a></li>
         </ul>
-        </div>
-      </div>
-      <div class="col-md-6 col-sm-12">
-        <div class="wordList challenge-form">
-          <form class="form-inline challenge-form-form">
-            <div class="form-group">
-              <label for="username">Challenge:</label>
-              <input type="text" class="form-control chal-user" id="chal-user" placeholder="Username, Username, ...">
-            </div>
-            <a href="#" class="btn btn-default challengeSubmit">Challenge</a>
-          </form>
-        </div>
-        <div class="wordList well">
-           <h2>Your Challenges:</h2>
-           <ul class="list-group">
-             {{#each chal in challenges}}
-             <li class="list-group-item">
-             {{#each chal.players}}
 
-                {{#if this.played}}
-                  {{#if hasNotPlayedChallenge chal._id}}
-                    <a href="#" class="btn btn-primary" disabled=true role="button">{{this.username}}</a>
-                  {{else}}
-                    <a href="#" class="btn btn-primary challenge_user" data-user="{{this.user_id}}" data-hash="{{chal.hash}}" role="button">
-                      {{this.username}} <span class="badge">{{this.score}}</span>
-                    </a>
-                  {{/if}}
-
-                {{else}}
-                <a href="#" class="btn btn-default disabled" role="button">
-                  {{this.username}}
-                </a>
-                {{/if}}
-              {{/each}}
-              {{#if hasNotPlayedChallenge chal._id}}
-                <a class="pull-right btn btn-success clearfix" href="/challenge/{{chal._id}}">Play</a>
-              {{/if}}
-            </li>
-            {{/each}}
-          </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="openChallenges">{{> openChallenges}}</div>
+          <div role="tabpanel" class="tab-pane" id="pastChallenges">{{> pastChallenges}}</div>
+          <div role="tabpanel" class="tab-pane" id="pastGames">{{> pastGames}}</div>
         </div>
       </div>
     </div>
   </div>
+</template>
+
+<template name="openChallenges">
+
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3 class="panel-title">Create Challenge</h3></div>
+    <div class="panel-body">
+      <form class="challenge-form-form">
+        <div class="form-group">
+          <input type="text" class="form-control chal-user" id="chal-user" placeholder="Username, Username, ...">
+        </div>
+        <a href="#" class="btn btn-default challengeSubmit">Create</a>
+      </form>
+    </div>
+  </div>
+
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info">
+      <h4 class="list-group-item-heading">Open Challenges</h4>
+      <p class="list-group-item-text">Click play to start. Users in blue have already completed the challenge.</p>
+    </li>
+    {{#each chal in challenges}}
+    <li class="list-group-item">
+    {{#each chal.players}}
+       {{#if this.played}}
+           <a href="#" class="btn btn-primary" disabled=true role="button">{{this.username}}</a>
+       {{else}}
+       <a href="#" class="btn btn-default disabled" role="button">
+         {{this.username}}
+       </a>
+       {{/if}}
+     {{/each}}
+       <a class="pull-right btn btn-success clearfix" href="/challenge/{{chal._id}}">Play</a>
+   </li>
+   {{/each}}
+  </ul>
+</template>
+
+<template name="pastChallenges">
+  <ul class="list-group">
+    <li class="list-group-item list-group-item-info">
+      <h4 class="list-group-item-heading">Past Challenges</h4>
+      <p class="list-group-item-text">Users in blue have completed the game. Click a username to see their words.</p>
+    </li>
+    {{#each chal in challenges}}
+    <li class="list-group-item">
+    {{#each chal.players}}
+       {{#if this.played}}
+         <a href="#" class="btn btn-primary challenge_user" data-user="{{this.user_id}}" data-hash="{{chal.hash}}" role="button">
+           {{this.username}} <span class="badge">{{this.score}}</span>
+         </a>
+       {{else}}
+         <a href="#" class="btn btn-default disabled" role="button">
+           {{this.username}}
+         </a>
+       {{/if}}
+     {{/each}}
+   </li>
+   {{/each}}
+  </ul>
+</template>
+
+<template name="pastGames">
+    <ul class="list-group">
+      <li class="list-group-item list-group-item-info">
+        <h4 class="list-group-item-heading">Past Games</h4>
+        <p class="list-group-item-text">Here are some of your most recent games.</p>
+      </li>
+      {{#each games}}
+        <li class="list-group-item"><b>{{this.finished}}</b>: Words: {{this.wordCount}}, Score: {{this.score}}</li>
+      {{/each}}
+    </ul>
 </template>

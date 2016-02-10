@@ -42,7 +42,6 @@ Meteor.methods({
     }else{
       return {word:word, score:0};
     }
-    return {word:word, score:score};
   },
   createChallenge: function(usersString){
     //usersString is the string the user wrote with usernames.

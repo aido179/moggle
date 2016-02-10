@@ -129,7 +129,8 @@ function finishWord(){
   if(word.length >= 3){
     //don't add duplicate words
     var words = Session.get('words');
-    if(words.indexOf(word.join(""))==-1){
+    var unCheckedWords = Session.get('unchecked');
+    if(words.indexOf(word.join(""))==-1 && unCheckedWords.indexOf(word.join(""))==-1){
       //add word to unchecked
       var uncheck = Session.get('unchecked');
       uncheck.push(word.join(""));

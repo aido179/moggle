@@ -2,7 +2,27 @@ Meteor.subscribe("Games");
 Meteor.subscribe("Challenges");
 Meteor.subscribe("userData");
 
-Template.user.helpers({
+Template.pastChallenges.helpers({
+  challenges: function(){
+    if(Meteor.user() != undefined && Meteor.user().username != undefined){
+      return Challenges.find({
+        players: {$elemMatch: {username: Meteor.user().username, played: true}}
+      });
+    }
+  }
+});
+
+Template.openChallenges.helpers({
+  challenges: function(){
+    if(Meteor.user() != undefined && Meteor.user().username != undefined){
+      return Challenges.find({
+        players: {$elemMatch: {username: Meteor.user().username, played: false}}
+      });
+    }
+  }
+});
+
+Template.pastGames.helpers({
   games: function () {
     gamesOut = [];
     var g = Games.find({score:{$ne:"0"}}, {sort: {created: -1}, skip:0 , limit: 15});
@@ -17,7 +37,12 @@ Template.user.helpers({
       });
     });
     return gamesOut;
-  },
+  }
+});
+
+
+Template.user.helpers({
+
   username: function(){
     var username;
     if(Meteor.user() === undefined || Meteor.user().username === undefined){
@@ -27,18 +52,11 @@ Template.user.helpers({
     }
     return username;
   },
-  challenges: function(){
-    return Challenges.find({});
-  },
-  hasNotPlayedChallenge: function(id){
-    var c = Challenges.findOne({_id:id});
-    for(i=0;i<c.players.length;i++){
-      if (c.players[i].username === Meteor.user().username){
-        if(c.players[i].played){
-          return false;
-        }
-        return true;
-      }
+  noUsername: function(){
+    if(Meteor.user() === undefined || Meteor.user().username === undefined){
+      return true;
+    }else{
+      return false;
     }
   }
 });
@@ -89,7 +107,7 @@ Template.user.events({
     event.preventDefault();
     $('.challengeSubmit').text("Creating...");
     $('.challengeSubmit').prop( "disabled", true );
-    Meteor.call("createChallenge",$('.chal-user').val(), function(){
+    Meteor.call("createChallenge",$('.chal-user').val(), function(err, res){
       if(err){
         $('.challengeSubmit').text("Try again!");
         $('.challengeSubmit').prop( "disabled", false );
