@@ -15,7 +15,12 @@ Template.boggleComplete.helpers({
     return Session.get('dice');
   },
   game: function(){
-    return Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()})
+    var g = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()});
+    if(g === undefined){
+      return {words: Session.get('words_scores')};
+    }else{
+      return g
+    }
   },
   score: function(){
     return Session.get('score');

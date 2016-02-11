@@ -1,5 +1,6 @@
 
-Session.setDefault('words', []);
+Session.setDefault('words', []);        //used to check if a word has been found already
+Session.setDefault('words_scores',[]);  //used to store logged out user words & scores.
 Session.setDefault('discarded',[]);
 Session.setDefault('unchecked',[]);
 Session.setDefault('time', "3:00");
@@ -39,7 +40,7 @@ Template.boggleGame.helpers({
   gameWords: function(){
     var g = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()});
     if(g === undefined){
-      return [];
+      return Session.get('words_scores').reverse();
     }else{
       var gameWordsArray = Games.findOne({hash: getGameHash(Session.get('dice')), player:Meteor.userId()}).words;
       return gameWordsArray.reverse();
@@ -151,6 +152,10 @@ function finishWord(){
           //update session words
           words.push(word_score.word);
           Session.set('words',words);
+          //update session words_scores for logged out users
+          var w_s = Session.get('words_scores');
+          w_s.push({word:word_score.word, score:word_score.score});
+          Session.set('words_scores', w_s);
         }else{
           //score == 0
           //add to discarded
@@ -200,9 +205,7 @@ endGame = function(){
   var t = Session.get('timer');
   Meteor.clearTimeout(t);
   //
-  console.log("storing game...");
   var score = Session.get('score');
-  console.log("score:"+score);
   //store challenge
   if(Session.get('isChallenge')){
     Meteor.call("completeChallenge", params.chal_id, score);

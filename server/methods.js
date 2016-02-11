@@ -27,17 +27,19 @@ Meteor.methods({
     }
     Accounts.setUsername(Meteor.userId(), username);
   },
-  // checks a word exists, saves the users selection, and returns the word score
+  // checks a word exists, saves the users selection (if logged in), and returns the word score
   // score = 0 for non-words
   checkWord: function(word, hash){
     var lowerWord = word.toLowerCase();
     var score = 0;
     if (!!Dictionary.find({word:lowerWord}).count()){
       score = getWordScore(word);
-      Games.update(
-        {hash:hash, player:Meteor.userId()},
-        {$push:{words:{score:score, word:word}}}
-      );
+      if(Meteor.userId()){
+        Games.update(
+          {hash:hash, player:Meteor.userId()},
+          {$push:{words:{score:score, word:word}}}
+        );
+      }
       return {word:word, score:score};
     }else{
       return {word:word, score:0};
