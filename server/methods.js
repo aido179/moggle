@@ -84,5 +84,9 @@ Meteor.methods({
   },
   getUserGame: function(user, hash){
     return Games.findOne({hash:hash, player:user}).words;
+  },
+  defineWord : function(word) {
+    res = Meteor.http.call("GET", "http://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=1&useCanonical=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5")
+    return(res.data[0].partOfSpeech + " -- " + res.data[0].text)
   }
 });

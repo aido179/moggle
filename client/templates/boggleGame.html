@@ -32,7 +32,7 @@
                 <li class="unchecked">{{this}} <div class="typing_loader"></div></li>
                 {{/each}}
                 {{#each gameWords}}
-                <li class="checked">{{this.word}} ({{this.score}})</li>
+                <li class="checked">{{this.word}} ({{this.score}})[{{ define this.word }}]</li>
                 {{else}}
                 <li>(Click and drag the letters!)</li>
                 {{/each}}
