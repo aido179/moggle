@@ -56,8 +56,6 @@ Meteor.methods({
       }
       checkedUsernames.push(users[i]);
     }
-    console.log(checkedUsers);
-    console.log(checkedUsers.length);
     //don't create empty Challenges
     if(checkedUsers.length == 0){
       throw new Meteor.Error(500, 'No users found!', 'None of the provided users have been found. No challenge has been created.');
@@ -87,6 +85,6 @@ Meteor.methods({
   },
   defineWord : function(word) {
     res = Meteor.http.call("GET", "http://api.wordnik.com/v4/word.json/" + word + "/definitions?limit=1&useCanonical=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5")
-    return(res.data[0].partOfSpeech + " -- " + res.data[0].text)
+    return({part: res.data[0].partOfSpeech, text: res.data[0].text})
   }
 });

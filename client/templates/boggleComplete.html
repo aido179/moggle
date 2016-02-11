@@ -43,15 +43,18 @@
             {{/if}}
             <hr>
             <h3>Words:</h3>
-            <ul>
+
+            <div class="list-group">
               {{#with game}}
                 {{#each game.words}}
-                <li>{{this.word}} ({{this.score}})</li>
+                <button type="button" class="checkedWord list-group-item" data-word="{{this.word}}">
+                  <h5 class="list-group-item-heading">{{this.word}} ({{this.score}})</h5>
+                </button>
                 {{else}}
                 <li>No words found.</li>
                 {{/each}}
               {{/with}}
-            </ul>
+            </div>
             <h3>Discarded:</h3>
             <ul>
               {{#each discarded}}

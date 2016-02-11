@@ -24,7 +24,6 @@ Template.boggleComplete.helpers({
     return Session.get('discarded');
   },
   challenge: function(){
-    //Challenges.findOne({_id:Session.get('chal_id')})
     return Challenges.findOne({_id:Session.get('chal_id')});
   },
   isChallenge: function(){
@@ -40,5 +39,21 @@ Template.boggleComplete.events({
     }else{
       newGameSession();
     }
+  },
+  'click .checkedWord': function(event){
+    //don't allow clicking twice
+    $(event.currentTarget).removeClass("checkedWord");
+    //get the word and define it
+    var defword = $(event.currentTarget).data('word');
+    $(event.currentTarget).append("<p class='list-group-item-text'></p>")
+    $(event.currentTarget).find('p').text("Loading...");
+    var def = Meteor.call("defineWord", defword, function(err, res){
+      if(err){
+        console.log(err);
+        $(event.currentTarget).find('p').text("An error occured.");
+      }else{
+        $(event.currentTarget).find('p').html("[<i>"+res.part+"</i>] "+res.text);
+      }
+    });
   }
 });

@@ -27,14 +27,16 @@
           </div>
           <div class="panel-body">
             <h3>Words:</h3>
-            <ul>
+            <ul  class="list-group">
                 {{#each gameWordsUnchecked}}
-                <li class="unchecked">{{this}} <div class="typing_loader"></div></li>
+                <li class="uncheckedWord list-group-item">{{this}} <div class="typing_loader"></div></li>
                 {{/each}}
                 {{#each gameWords}}
-                <li class="checked">{{this.word}} ({{this.score}})[{{ define this.word }}]</li>
+                <li class="checkedWord list-group-item">
+                  {{this.word}} ({{this.score}})
+                </li>
                 {{else}}
-                <li>(Click and drag the letters!)</li>
+                <li class="list-group-item">(Click and drag the letters!)</li>
                 {{/each}}
             </ul>
             <hr>
