@@ -80,7 +80,7 @@ Template.user.events({
     $('.challengeSubmit').prop( "disabled", true );
     Meteor.call("createChallenge",$('.chal-user').val(), function(err, result){
       if(err){
-        $('.challengeSubmit').text("Try again!");
+        $('.challengeSubmit').text(err.reason+" Please try again.");
         $('.challengeSubmit').prop( "disabled", false );
       }else{
         $('.challengeSubmit').text("Done!");
@@ -109,7 +109,7 @@ Template.user.events({
     $('.challengeSubmit').prop( "disabled", true );
     Meteor.call("createChallenge",$('.chal-user').val(), function(err, res){
       if(err){
-        $('.challengeSubmit').text("Try again!");
+        $('.challengeSubmit').text(err.reason+" Please try again.");
         $('.challengeSubmit').prop( "disabled", false );
       }else{
         $('.challengeSubmit').text("Done!");

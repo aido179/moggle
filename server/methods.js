@@ -56,6 +56,12 @@ Meteor.methods({
       }
       checkedUsernames.push(users[i]);
     }
+    console.log(checkedUsers);
+    console.log(checkedUsers.length);
+    //don't create empty Challenges
+    if(checkedUsers.length == 0){
+      throw new Meteor.Error(500, 'No users found!', 'None of the provided users have been found. No challenge has been created.');
+    }
     //make sure the user creating the challenge is included.
     if(checkedUsernames.indexOf(Meteor.user().username) == -1){
       var user_id = Meteor.user()._id;
